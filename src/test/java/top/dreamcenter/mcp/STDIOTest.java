@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-public class CommonTest {
+public class STDIOTest {
 
     private static String jarFilePath;
     private McpSyncClient mcpClient;
@@ -24,7 +24,7 @@ public class CommonTest {
     public static void init() throws URISyntaxException {
         // find jar file path
 
-        URL resource = CommonTest.class.getClassLoader().getResource("locate.txt");
+        URL resource = STDIOTest.class.getClassLoader().getResource("locate.properties");
         Assertions.assertNotNull(resource, "load junit classLoader context fail");
 
         Path targetPath = Paths.get(resource.toURI()).getParent().getParent();
@@ -32,8 +32,9 @@ public class CommonTest {
         File files = targetPath.toFile();
         File[] files1 = files.listFiles(file -> (file.getName().endsWith(".jar")));
 
-        Assertions.assertNotNull(files1, "Can not find the generated jar file under [target] directory");
-        Assertions.assertEquals(files1.length, 1, "Find more then one jar file under [target] directory");
+        Assertions.assertNotNull(files1, "Not validate directory");
+        Assertions.assertNotEquals(0, files1.length, "Can not find the generated jar file under [target] directory");
+        Assertions.assertEquals(1, files1.length, "Find more then one jar file under [target] directory");
 
         jarFilePath = files1[0].getAbsolutePath();
     }
@@ -41,7 +42,9 @@ public class CommonTest {
     @BeforeEach
     public void initClient() {
         ServerParameters serverParameters = ServerParameters.builder("java")
-                .args("-jar", jarFilePath).build();
+                .args("-jar", "-Dfile.encoding=UTF-8", "-Dspring.ai.mcp.server.stdio=true", jarFilePath)
+                .env(Map.of("dreamcenter", "Welcome.")) // Set environments
+                .build();
         mcpClient = McpClient.sync(new StdioClientTransport(serverParameters)).build();
     }
 
@@ -61,7 +64,7 @@ public class CommonTest {
         List<McpSchema.Content> contentList = weather.content();
         String res = easyTextContent(contentList);
 
-        Assertions.assertEquals("\"南京今天的温度是20\"", res);
+        Assertions.assertEquals("\"Welcome.南京今天的温度是20\"", res);
     }
 
     @Test
