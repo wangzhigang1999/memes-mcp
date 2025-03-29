@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mcp-server
+    version: 1.0.0
+
+
+  datasource:
+    url: ${jdbcUrl}
+    username: ${jdbcUser}
+    password: ${jdbcPassword}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  threads:
+    virtual:
+      enabled: true
