@@ -16,34 +16,38 @@
     <properties>
         <java.version>21</java.version>
         <mcp.verison>1.0.0-M6</mcp.verison>
-          <java.version>21</java.version>
+        <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- 依赖版本 -->
-        <protoc.version>3.25.3</protoc.version>
-        <io.grpc.version>1.63.1</io.grpc.version>
-        <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
-        <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
         <lombok.version>1.18.32</lombok.version>
-        <commons-io.version>2.15.1</commons-io.version>
-        <aspectj.version>1.9.21</aspectj.version>
         <mysql.version>8.0.33</mysql.version>
-        <spotless.version>2.44.0</spotless.version>
         <mybatis-plus.version>3.5.10.1</mybatis-plus.version>
-        <gson.version>2.10.1</gson.version>
-        <guava.version>33.1.0-jre</guava.version>
-        <dashscope.version>2.18.2</dashscope.version>
-        <qiniu.version>7.15.0</qiniu.version>
+
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-mcp-server-webmvc-spring-boot-starter</artifactId>
             <version>${mcp.verison}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.modelcontextprotocol.sdk</groupId>
+                    <artifactId>mcp-spring-webmvc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>io.modelcontextprotocol.sdk</groupId>
+            <artifactId>mcp-spring-webmvc</artifactId>
+            <version>0.8.1</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- 数据库相关依赖 -->
         <dependency>
             <groupId>mysql</groupId>
