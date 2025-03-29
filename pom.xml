@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -8,31 +9,25 @@
         <version>3.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>top.dreamcenter</groupId>
-    <artifactId>mcp</artifactId>
+    <groupId>com.memes.mcp</groupId>
+    <artifactId>memes-mcp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mcp</name>
-    <description>Template project for SpringBoot + MCP + JUnit</description>
+    <name>memes-mcp</name>
+    <description>MCP Server for memes</description>
     <properties>
+        <mcp.version>1.0.0-M6</mcp.version>
         <java.version>21</java.version>
-        <mcp.verison>1.0.0-M6</mcp.verison>
-        <java.version>21</java.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- 依赖版本 -->
         <lombok.version>1.18.32</lombok.version>
         <mysql.version>8.0.33</mysql.version>
         <mybatis-plus.version>3.5.10.1</mybatis-plus.version>
-
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-mcp-server-webmvc-spring-boot-starter</artifactId>
-            <version>${mcp.verison}</version>
+            <version>${mcp.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>io.modelcontextprotocol.sdk</groupId>
@@ -45,7 +40,6 @@
             <groupId>io.modelcontextprotocol.sdk</groupId>
             <artifactId>mcp-spring-webmvc</artifactId>
             <version>0.8.1</version>
-            <scope>compile</scope>
         </dependency>
 
         <!-- 数据库相关依赖 -->
@@ -67,6 +61,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 
@@ -88,5 +83,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
