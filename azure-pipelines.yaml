@@ -2,6 +2,7 @@ trigger:
   paths:
     exclude:
       - README.md
+      - README_EN.md
       - LICENSE
       - .gitignore
       - deployments/*
