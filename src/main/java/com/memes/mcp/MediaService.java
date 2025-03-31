@@ -19,7 +19,7 @@ public class MediaService {
     }
 
     @Tool(description = "随机选取一些梗图；randomly select some memes")
-    public String getRandomMediaContent(@ToolParam(description = "limit, 0 - 50") Integer limit) {
+    public String getRandomMeme(@ToolParam(description = "limit, 0 - 50") Integer limit) {
         // 如果 limit 为 null 或者超出范围，则默认为 10
         if (limit == null || limit < 0) {
             limit = 10;
