@@ -1,21 +1,44 @@
 package com.memes.mcp;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class MediaService {
-    private final MediaMapper mediaMapper;
-
-    public MediaService(MediaMapper mediaMapper) {
-        this.mediaMapper = mediaMapper;
+@RequiredArgsConstructor
+public class MediaService extends ServiceImpl<MediaMapper, MediaContent> {
+    public List<MediaContent> getRandomMediaContents(int num) {
+        // 获取所有记录的数量
+        long totalRecords = count();
+        if (totalRecords == 0 || num <= 0) {
+            return List.of();
+        }
+        // 计算需要查询的记录数
+        int recordsToFetch = Math.min(num, (int) totalRecords);
+        // 创建随机ID集合
+        Random random = new Random();
+        List<Long> randomIds = new ArrayList<>();
+        while (randomIds.size() < recordsToFetch) {
+            long randomId = (long) (random.nextDouble() * totalRecords + 1);
+            if (!randomIds.contains(randomId)) {
+                randomIds.add(randomId);
+            }
+        }
+        // 使用QueryWrapper查询这些随机ID
+        QueryWrapper<MediaContent> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("id", randomIds);
+        return list(queryWrapper);
     }
 
     @Tool(description = "随机选取一些梗图；randomly select some memes")
@@ -33,7 +56,7 @@ public class MediaService {
 
         List<MediaContent> randomMeme;
         try {
-            randomMeme = mediaMapper.getRandomMeme(adjustedLimit);
+            randomMeme = getRandomMediaContents(adjustedLimit);
         } catch (Exception e) {
             log.error("Failed to fetch random meme content", e);
             return "An error occurred while fetching meme content.";
